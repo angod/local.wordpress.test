@@ -1,0 +1,17 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "nsdaction/daction",
+	"version": "0.0.1",
+	"title": "Daction plugin",
+	"category": "design",
+	"icon": "date-plugins",
+	"description": "Simple test plugin for learning purpose",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "daction",
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css"
+}
