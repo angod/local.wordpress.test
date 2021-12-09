@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
-import { useBlockProps } from '@wordpress/block-editor';
+// import { useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -29,10 +29,61 @@ import './editor.scss';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
-	return (
-		<p {...useBlockProps()}>
-			{__('Daction plugin – hello from the editor!', 'daction')}
+
+//==============================================================================
+import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
+import { Panel, PanelBody, DatePicker } from "@wordpress/components";
+// import { DateTimePicker } from "@wordpress/components";
+import { useState } from '@wordpress/element';
+
+export default function Edit({ attributes, setAttributes }) {
+	const { date: postDate } = attributes;
+	console.log("====>>>> postDate:", postDate);
+
+	const dateFormatOptions = {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	};
+
+	const [date, setDate] = useState(new Date());
+
+	return [
+		<InspectorControls>
+			<Panel>
+				<PanelBody
+					title={ __("Date", "daction")}
+					icon="calendar-alt"
+				>
+					<DatePicker
+						currentDate={ date }
+						onChange= {
+							(newDate) => {
+								setDate(newDate);
+								setAttributes({ date:
+									(
+										new Intl.DateTimeFormat("en-US", dateFormatOptions)
+											.format(Date.parse(newDate))
+									).toString()
+								});
+							}
+						}
+					/>
+				</PanelBody>
+			</Panel>
+		</InspectorControls>,
+		<p { ...useBlockProps() } >
+			{
+				Date.parse(postDate)
+				?
+				// DRY: move to function
+				(
+					new Intl.DateTimeFormat("en-US", dateFormatOptions)
+						.format(Date.parse(postDate))
+				).toString()
+				:
+				postDate
+			}
 		</p>
-	);
+	];
 }

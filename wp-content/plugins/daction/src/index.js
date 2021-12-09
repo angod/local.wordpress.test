@@ -20,12 +20,24 @@ import './style.scss';
 import Edit from './edit';
 import save from './save';
 
+//==============================================================================
+
+//==============================================================================
+
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 registerBlockType('nsdaction/daction', {
+	icon: "calendar-alt",
+	attributes: {
+		date: {
+			type: "string",
+			source: "text",
+			default: "pick date from block panel",
+		},
+	},
 	/**
 	 * @see ./edit.js
 	 */

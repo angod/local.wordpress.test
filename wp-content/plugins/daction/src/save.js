@@ -22,10 +22,11 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-export default function save() {
+export default function save({ attributes }) {
+	const { date } = attributes;
 	return (
-		<p {...useBlockProps.save()}>
-			{__('Daction plugin – hello from the saved content!', 'daction')}
+		<p { ...useBlockProps.save() }>
+			{ date }
 		</p>
 	);
 }
