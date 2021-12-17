@@ -136,7 +136,7 @@ __webpack_require__.r(__webpack_exports__);
   icon: "calendar-alt",
   attributes: {
     date: {
-      type: "string",
+      type: "strin",
       source: "text",
       default: "pick date from block panel"
     }

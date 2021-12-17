@@ -33,7 +33,7 @@ registerBlockType('nsdaction/daction', {
 	icon: "calendar-alt",
 	attributes: {
 		date: {
-			type: "string",
+			type: "strin",
 			source: "text",
 			default: "pick date from block panel",
 		},
