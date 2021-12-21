@@ -12,8 +12,12 @@ $query_args = array(
 	'order' => 'DESC'
 );
 
+get_template_part(
+	"template-parts/content/content-grid",
+	"start"
+);
+
 $optin_query = new WP_Query($query_args);
-echo '<div id="masonry-main" class="masonry-site-main">';
 if ($optin_query->have_posts()) {
 	// Non-standard loop due to ongoing bug in core: https://core.trac.wordpress.org/ticket/18408
 	// Can't wp_reset_postdata on post.php edit screen
@@ -25,7 +29,10 @@ if ($optin_query->have_posts()) {
 		);
 	}
 }
-echo '</div>';
+get_template_part(
+	"template-parts/content/content-grid",
+	"end"
+);
 
 /*$posts_list = get_posts();
 foreach ($posts_list as $post) {
