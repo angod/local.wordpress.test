@@ -36,15 +36,22 @@ import { Panel, PanelBody, DatePicker } from "@wordpress/components";
 // import { DateTimePicker } from "@wordpress/components";
 import { useState } from '@wordpress/element';
 
-export default function Edit({ attributes, setAttributes }) {
-	const { date: postDate } = attributes;
-	console.log("====>>>> postDate:", postDate);
-
+const formatDate = (rawDate) => {
 	const dateFormatOptions = {
 		year: "numeric",
 		month: "long",
 		day: "numeric",
 	};
+
+	return (
+		new Intl.DateTimeFormat("en-US", dateFormatOptions)
+			.format(Date.parse(rawDate))
+	).toString();
+};
+
+export default function Edit({ attributes, setAttributes }) {
+	const { date: postDate } = attributes;
+	console.log("====>>>> postDate:", postDate);
 
 	const [date, setDate] = useState(new Date());
 
@@ -60,11 +67,7 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange= {
 							(newDate) => {
 								setDate(newDate);
-								setAttributes({ date:
-									(
-										new Intl.DateTimeFormat("en-US", dateFormatOptions)
-											.format(Date.parse(newDate))
-									).toString()
+								setAttributes({ date: formatDate(newDate)
 								});
 							}
 						}
@@ -73,17 +76,7 @@ export default function Edit({ attributes, setAttributes }) {
 			</Panel>
 		</InspectorControls>,
 		<p { ...useBlockProps() } >
-			{
-				Date.parse(postDate)
-				?
-				// DRY: move to function
-				(
-					new Intl.DateTimeFormat("en-US", dateFormatOptions)
-						.format(Date.parse(postDate))
-				).toString()
-				:
-				postDate
-			}
+			{ Date.parse(postDate) ? formatDate(postDate) : postDate }
 		</p>
 	];
 }

@@ -59,6 +59,16 @@ __webpack_require__.r(__webpack_exports__);
  // import { DateTimePicker } from "@wordpress/components";
 
 
+
+const formatDate = rawDate => {
+  const dateFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  };
+  return new Intl.DateTimeFormat("en-US", dateFormatOptions).format(Date.parse(rawDate)).toString();
+};
+
 function Edit(_ref) {
   let {
     attributes,
@@ -68,11 +78,6 @@ function Edit(_ref) {
     date: postDate
   } = attributes;
   console.log("====>>>> postDate:", postDate);
-  const dateFormatOptions = {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  };
   const [date, setDate] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(new Date());
   return [(0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Panel, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Date", "daction"),
@@ -82,11 +87,10 @@ function Edit(_ref) {
     onChange: newDate => {
       setDate(newDate);
       setAttributes({
-        date: new Intl.DateTimeFormat("en-US", dateFormatOptions).format(Date.parse(newDate)).toString()
+        date: formatDate(newDate)
       });
     }
-  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)(), Date.parse(postDate) ? // DRY: move to function
-  new Intl.DateTimeFormat("en-US", dateFormatOptions).format(Date.parse(postDate)).toString() : postDate)];
+  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)(), Date.parse(postDate) ? formatDate(postDate) : postDate)];
 }
 
 /***/ }),

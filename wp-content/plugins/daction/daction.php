@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Daction plugin
+ * Plugin Name:      daction
  * Description:       Simple test plugin for learning purpose
  * Requires at least: 5.8
  * Requires PHP:      7.0
