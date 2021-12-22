@@ -111,10 +111,10 @@ Text Domain: twentytwentyone-child
 }
 
 .projects,
-.commits {
-	margin: 0 auto;
-	width: 75%;
-	/*max-width: 75% !important;*/
+.commits,
+.sc-error {
+	margin: 50px auto 0;
+	max-width: 75% !important;
 }
 
 .projects-header,
@@ -123,7 +123,8 @@ Text Domain: twentytwentyone-child
 }
 
 .projects-title,
-.commits-title {
+.commits-title,
+.sc-error-title {
 	font-size: 40px;
 	text-align: center;
 	margin: 0 auto;
