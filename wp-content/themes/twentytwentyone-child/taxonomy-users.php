@@ -73,8 +73,8 @@ function gl_projects_markup($projects, $user_id) {
 		<ul class="projects-list"><!-- START# ul.projects-title-list -->
 		<?php foreach ($projects as $project): ?>
 			<li>
-				<a href="<?php echo $project->web_url; ?>">
-				<?php echo $project->name; ?>
+				<a href="<?php echo $project['web_url']; ?>">
+				<?php echo $project['name']; ?>
 				</a>
 			</li>
 		<?php endforeach; ?>
@@ -87,9 +87,39 @@ function gl_projects_markup($projects, $user_id) {
 
 //==============================================================================
 // get GitLab projects
-function get_projects($user_id, $amount = 2) {
+function get_projects($user_id, $amount = 5) {
 	$response = wp_remote_get(
 		"https://gitlab.com/api/v4/users/${user_id}/projects?per_page=${amount}"
 	);
-	return json_decode($response["body"]);
+
+	$raw_projects = json_decode($response["body"]);
+	return process_projects($raw_projects);
 }
+
+//==============================================================================
+/* sort GitLab projects by ID
+ * select fields: ID, name, web_url
+ * return result array with selected fields
+ */
+function process_projects($projects) {
+	$result = array();
+	for ($idx = 0; $idx < count($projects); $idx++) {
+		$result[$idx]["project_id"]	= $projects[$idx]->id;
+		$result[$idx]["name"]		= $projects[$idx]->name;
+		$result[$idx]["web_url"]	= $projects[$idx]->web_url;
+	}
+
+	return $result;
+}
+
+
+//==============================================================================
+/**
+ * change title -> GL users
+ */
+function gl_users_title( $title_parts ) {
+    if ( get_the_ID() === 257 )
+	return ['GL users'];
+}
+echo "STOP";
+add_filter( 'document_title_parts', 'gl_users_title', 999 );
